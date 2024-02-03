@@ -60,3 +60,20 @@
   Copy the the STORAGE_AWS_IAM_USER_ARN and STORAGE_AWS_EXTERNAL_ID.
   11. Navigate to the AWS console, ALT+S, search for the IAM -> Roles -> Search for the created role, Click trust policy -> edit trust policy -> Paste the ARN and External ID in the respective fields and click update trust policy
   12. Navigate back to Snowflake, Create a Stage, then use Copy option to copy the data into the table.
+
+### Data Loading from GCP
+
+  1. Create GCP account
+  2. Press /, search for cloud storage, create a storage, folders, and upload files
+  3. Navigate to Snowflake,  create storage integration object
+       ```
+         create or replace storage integration <name>
+         enabled = true
+         type = external_stage
+         storage_provider = gcs
+         storage_allowed_locations = ('gcs://<bucket name>/path')
+         
+       ```
+  4. Once create,  Run ``` DESC storage integration <gcs object> ``` . Copy STORAGE_GCP_SERVICE_ACCOUNT .
+  5. Navigate back to GCS console, Select the respective bucket, click on the persmissions,  click on grant access, paste the STORAGE_GCP_SERVICE_ACCOUNT in the New principle, and select cloud storage- storage admin under the assign role and click on save.
+  6. Finally, create Stage, and table, to copy the data.
